@@ -5,92 +5,144 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLOR.background,
+        paddingHorizontal: 24,
+        paddingVertical: 40,
     },
 
     content: {
-        padding: 20,
+        flex: 1,
+    },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 24,
+        gap: 12
     },
 
-    header: {
-        marginBottom: 20,
-    },
+
 
     title: {
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: "700",
         color: COLOR.text,
+        marginBottom: 24,
     },
 
-    subtitle: {
-        fontSize: 14,
-        color: COLOR.textSecondary,
-        marginTop: 6,
-    },
-
-    surveyCard: {
-        backgroundColor: COLOR.surface,
-        borderWidth: 1,
-        borderColor: COLOR.border,
-        borderRadius: 14,
-        padding: 16,
-        marginBottom: 12,
-    },
-
-    surveyTitle: {
-        fontSize: 17,
+    label: {
+        fontSize: 15,
         fontWeight: "600",
         color: COLOR.text,
         marginBottom: 8,
-    },
-
-    surveyInfo: {
-        fontSize: 14,
-        color: COLOR.textSecondary,
-        marginBottom: 4,
-    },
-
-    status: {
-        alignSelf: "flex-start",
-        backgroundColor: COLOR.background,
-        borderWidth: 1,
-        borderColor: COLOR.border,
-        borderRadius: 20,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        marginTop: 8,
-    },
-
-    statusText: {
-        fontSize: 12,
-        fontWeight: "600",
-        color: COLOR.primary,
-    },
-
-    emptyContainer: {
-        alignItems: "center",
-        justifyContent: "center",
-        paddingVertical: 60,
-    },
-
-    emptyText: {
-        fontSize: 15,
-        color: COLOR.textSecondary,
-        textAlign: "center",
-    },
-
-    button: {
-        backgroundColor: COLOR.primary,
-        height: 48,
-        borderRadius: 10,
-        alignItems: "center",
-        justifyContent: "center",
         marginTop: 16,
     },
 
-    buttonText: {
-        color: COLOR.white,
-        fontSize: 15,
+    input: {
+        height: 52,
+        borderWidth: 1,
+        borderColor: COLOR.border,
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        fontSize: 16,
+        color: COLOR.text,
+        backgroundColor: COLOR.surface,
+    },
+
+    options: {
+        flexDirection: "row",
+        gap: 12,
+    },
+
+    option: {
+        flex: 1,
+        height: 52,
+        borderWidth: 1,
+        borderColor: COLOR.border,
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: COLOR.surface,
+    },
+
+    selectedOption: {
+        borderColor: COLOR.primary,
+        backgroundColor: COLOR.primary,
+    },
+
+    optionText: {
+        fontSize: 16,
         fontWeight: "600",
+        color: COLOR.text,
+    },
+
+    selectedOptionText: {
+        color: "#FFFFFF",
+    },
+
+    errors: {
+        color: COLOR.error,
+        fontSize: 13,
+        marginTop: 5,
+    },
+
+    backButton: {
+        alignSelf: "flex-start",
+        width: 42,
+        height: 42,
+        borderRadius: 12,
+        backgroundColor: COLOR.surface,
+        borderWidth: 1,
+        borderColor: COLOR.border,
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 18,
+    },
+
+    stepText: {
+        fontSize: 14,
+        color: COLOR.textSecondary,
+        marginTop: -16,
+    },
+
+    formContainer: {
+        flex: 1,
+        marginTop: 30,
+    },
+
+    buttonRow: {
+        flexDirection: "row",
+        gap: 10,
+    },
+
+    previousButton: {
+        flex: 1,
+        height: 54,
+        borderRadius: 14,
+        backgroundColor: COLOR.surface,
+        borderWidth: 1,
+        borderColor: COLOR.border,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    previousButtonText: {
+        fontSize: 16,
+        fontWeight: "600",
+        color: COLOR.text,
+    },
+
+    nextButton: {
+        flex: 1,
+        height: 54,
+        borderRadius: 14,
+        backgroundColor: COLOR.primary,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    buttonText: {
+        fontSize: 16,
+        fontWeight: "700",
+        color: "#FFFFFF",
     },
 });
 

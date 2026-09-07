@@ -10,14 +10,6 @@ import {
   getEmployeeProfile,
 } from "../../services/auth";
 
-type UserProfile = {
-  id: string;
-  full_name: string;
-  role: string;
-  cnic: string;
-  block_assign_number: string;
-  profile_image_url: string | null;
-};
 
 export default function RootLayout() {
   const [loading, setLoading] = useState(true);

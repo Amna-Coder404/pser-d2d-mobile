@@ -11,19 +11,12 @@ import { getImageUrl } from "../../lib/storage";
 import { useAuthStore } from "../../store/authStore";
 import styles from "../../styles/home.styles";
 
-type EmployeeProfile = {
-  id: string;
-  full_name: string;
-  role: string;
-  cnic: string;
-  block_assign_number: string;
-  profile_image_url: string | null;
-};
+
 
 export default function Home() {
-  const user = useAuthStore((state) => state.user) as EmployeeProfile | null;
+  const user = useAuthStore((state) => state.user);
 
-  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
+  const [profileImageUrl, setProfileImageUrl] = useState(null);
 
   useEffect(() => {
     const loadProfileImage = async () => {
