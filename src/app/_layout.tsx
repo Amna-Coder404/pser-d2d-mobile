@@ -1,9 +1,9 @@
 import { Stack, useRouter, useSegments } from "expo-router";
 import { useEffect, useState } from "react";
-
 import Loader from "../../components/Loader";
 import SafeAreaWrapper from "../../components/SafeAreaWrapper";
 import { supabase } from "../../lib/supabase";
+import { useAuthStore } from "../../store/authStore";
 
 import {
   getCurrentSession,
@@ -21,7 +21,9 @@ type UserProfile = {
 
 export default function RootLayout() {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<UserProfile | null>(null);
+
+  const user = useAuthStore((state) => state.user);
+  const setUser = useAuthStore((state) => state.setUser);
 
   const router = useRouter();
   const segments = useSegments();
@@ -38,7 +40,7 @@ export default function RootLayout() {
             const profile = await getEmployeeProfile(
               session.user.id
             );
-
+            console.log("CURRENT USER:", profile);
             setUser(profile);
           } catch (error) {
             console.log("PROFILE ERROR:", error);
