@@ -12,17 +12,37 @@ const styles = StyleSheet.create({
         padding: 20,
     },
 
+    header: {
+        marginBottom: 20,
+    },
+    back: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 8,
+    },
+    backButton: {
+        width: 42,
+        height: 42,
+        borderRadius: 12,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: COLOR.card,
+        borderWidth: 1,
+        borderColor: COLOR.border,
+        marginRight: 12,
+    },
+
     title: {
+        flex: 1,
         fontSize: 28,
         fontWeight: "700",
         color: COLOR.text,
-        marginBottom: 6,
     },
-
     subtitle: {
-        fontSize: 14,
+        fontSize: 15,
         color: COLOR.textSecondary,
-        marginBottom: 20,
+        marginLeft: 54,
+        lineHeight: 21,
     },
 
     draftCard: {

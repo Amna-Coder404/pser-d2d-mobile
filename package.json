@@ -7,6 +7,7 @@
     "@expo/vector-icons": "^15.0.2",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-picker/picker": "2.11.4",
+    "@react-navigation/drawer": "^7.13.10",
     "@supabase/supabase-js": "^2.114.0",
     "expo": "~57.0.19",
     "expo-constants": "~57.0.17",

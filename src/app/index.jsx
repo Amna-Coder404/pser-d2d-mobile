@@ -7,6 +7,8 @@ import {
   View,
 } from "react-native";
 
+import { Ionicons } from "@expo/vector-icons";
+import COLOR from "../../constant/colors";
 import { getImageUrl } from "../../lib/storage";
 import { useAuthStore } from "../../store/authStore";
 import styles from "../../styles/home.styles";
@@ -15,7 +17,7 @@ import styles from "../../styles/home.styles";
 
 export default function Home() {
   const user = useAuthStore((state) => state.user);
-
+  const [sidebarVisible, setSidebarVisible] = useState(false);
   const [profileImageUrl, setProfileImageUrl] = useState(null);
 
   useEffect(() => {
@@ -37,8 +39,36 @@ export default function Home() {
 
     loadProfileImage();
   }, [user?.profile_image_url]);
+
+
+
   return (
     <View style={styles.container}>
+      {/* APP Header */}
+      <View style={styles.appHeader}>
+
+        <Image
+          source={require("../../assets/images/pser-survey-punjab.webp")}
+          style={styles.appLogo}
+          resizeMode="contain"
+        />
+
+        <Text style={styles.appTitle}>
+          PSER D2D
+        </Text>
+
+        <TouchableOpacity
+          style={styles.menuButton}
+          onPress={() => setSidebarVisible(true)}
+          activeOpacity={0.7} >
+          <Ionicons
+            name="menu"
+            size={28}
+            color={COLOR.text}
+          />
+        </TouchableOpacity>
+
+      </View>
 
       {/* Profile Header */}
       <View style={styles.profileHeader}>
@@ -72,16 +102,6 @@ export default function Home() {
 
       </View>
 
-      {/* Dashboard Title */}
-      <View style={styles.titleSection}>
-        <Text style={styles.title}>
-          PSER D2D
-        </Text>
-
-        <Text style={styles.subtitle}>
-          Employee Dashboard
-        </Text>
-      </View>
 
       {/* Draft Surveys */}
       <TouchableOpacity
@@ -90,7 +110,7 @@ export default function Home() {
         activeOpacity={0.8}
       >
         <View style={styles.cardIcon}>
-          <Text style={styles.iconText}>📝</Text>
+          <Ionicons name="pencil-outline" style={styles.iconText} />
         </View>
 
         <View style={styles.cardContent}>
@@ -103,9 +123,7 @@ export default function Home() {
           </Text>
         </View>
 
-        <Text style={styles.arrow}>
-          →
-        </Text>
+        <Ionicons name='arrow-forward' color={COLOR.primary} size={23} />
       </TouchableOpacity>
 
       {/* My Surveys */}
@@ -115,7 +133,7 @@ export default function Home() {
         activeOpacity={0.8}
       >
         <View style={styles.cardIcon}>
-          <Text style={styles.iconText}>✓</Text>
+          <Ionicons name="list-circle" style={styles.iconText} />
         </View>
 
         <View style={styles.cardContent}>
@@ -128,19 +146,17 @@ export default function Home() {
           </Text>
         </View>
 
-        <Text style={styles.arrow}>
-          →
-        </Text>
+        <Ionicons name='arrow-forward' color={COLOR.primary} size={23} />
       </TouchableOpacity>
 
       {/* Start Survey */}
       <TouchableOpacity
         style={[styles.card, styles.startCard]}
         onPress={() => router.push("/survey")}
-        activeOpacity={0.8}
-      >
+        activeOpacity={0.8} >
+
         <View style={styles.cardIcon}>
-          <Text style={styles.iconText}>+</Text>
+          <Ionicons name="create-outline" style={styles.iconText} />
         </View>
 
         <View style={styles.cardContent}>
@@ -153,9 +169,7 @@ export default function Home() {
           </Text>
         </View>
 
-        <Text style={styles.arrow}>
-          →
-        </Text>
+        <Ionicons name='arrow-forward' color={COLOR.primary} size={23} />
       </TouchableOpacity>
 
     </View>

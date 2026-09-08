@@ -1,9 +1,10 @@
 
-import { router, useFocusEffect } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
 import {
     Alert,
     FlatList, Text,
+    TouchableOpacity,
     View
 } from "react-native";
 
@@ -13,7 +14,9 @@ import { getDrafts } from "../../services/drafts";
 import { useAuthStore } from "../../store/authStore";
 import styles from "../../styles/drafts.styles";
 
+import { Ionicons } from "@expo/vector-icons";
 import DraftCard from "../../components/DraftCard";
+import COLOR from "../../constant/colors";
 import { deleteDraft } from "../../services/drafts";
 
 
@@ -23,6 +26,7 @@ const DraftsSurvey = () => {
 
     const [drafts, setDrafts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
     const onNext = (itemId) => {
         router.push({
@@ -86,7 +90,16 @@ const DraftsSurvey = () => {
     return (
         <View style={styles.container}>
 
-            <Text style={styles.title}>  Draft Surveys </Text>
+
+            <View style={styles.header}>
+                <View style={styles.back}>
+                    <TouchableOpacity onPress={() => router.back()} style={styles.backButton}   >
+                        <Ionicons name="arrow-back" size={24} color={COLOR.text} />
+                    </TouchableOpacity>
+                    <Text style={styles.title}>Draft Surveys</Text>
+                </View>
+                <Text style={styles.subtitle}>Resume your incomplete PSER surveys</Text>
+            </View>
 
             <FlatList
                 data={drafts}
@@ -98,7 +111,7 @@ const DraftsSurvey = () => {
                         onDelete={() => onDraftDelete(item.id)}
                     />
                 )}
-
+                showsVerticalScrollIndicator={false}
                 ListEmptyComponent={<NotFound text={"No draft surveys found."} />}
             />
 

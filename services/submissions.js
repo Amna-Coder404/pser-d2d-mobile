@@ -52,3 +52,22 @@ export const submitSurvey = async (employeeId, surveyData) => {
     return data;
 };
 
+export const getMySurveys = async (employeeId) => {
+    if (!employeeId) {
+        throw new Error("Employee ID is required.");
+    }
+
+
+    const { data, error } = await supabase
+        .from("pser_submissions")
+        .select("*")
+        .eq("employee_id", employeeId)
+
+
+    if (error) {
+        console.error("GET Survey ERROR:", error);
+        throw error;
+    }
+
+    return data;
+}
