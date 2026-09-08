@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLOR.background,
+        paddingHorizontal: 20
     },
 
     content: {
@@ -77,6 +78,46 @@ const styles = StyleSheet.create({
         color: COLOR.white,
         fontSize: 15,
         fontWeight: "600",
+    },
+
+    // Draft Card
+    darftCard: {
+        borderWidth: 1,
+        borderRadius: 10,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        overflow: "hidden",
+    },
+
+    name: {
+        fontSize: 18,
+        fontWeight: "bold",
+    },
+
+    leftBtn: {
+        flex: 1,
+        padding: 14,
+        gap: 4,
+        justifyContent: "center",
+    },
+
+    rightBtn: {
+        backgroundColor: "#86000063",
+        width: 65,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+    conSur: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 6,
+    },
+
+    text: {
+        color: COLOR.primary,
+        fontWeight: "500",
+        fontSize: 17,
     },
 });
 

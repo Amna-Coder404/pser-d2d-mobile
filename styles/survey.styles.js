@@ -144,6 +144,11 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         color: "#FFFFFF",
     },
+
+    picker: {
+        backgroundColor: COLOR.surface,
+
+    }
 });
 
 export default styles;

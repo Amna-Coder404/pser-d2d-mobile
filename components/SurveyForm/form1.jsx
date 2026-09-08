@@ -44,7 +44,6 @@ const Form1 = forwardRef(({ data, updateField, onBack }, ref) => {
 
     const handleChange = (field, value) => {
         updateField(field, value);
-
         if (errors[field]) {
             setErrors((prev) => ({
                 ...prev,

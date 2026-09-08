@@ -1,5 +1,5 @@
-import { router } from "expo-router";
-import { useRef, useState } from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import { useRef } from "react";
 import {
     Alert,
     Text,
@@ -10,40 +10,34 @@ import {
 import Form1 from "../../components/SurveyForm/form1";
 import Form2 from "../../components/SurveyForm/form2";
 import Form3 from "../../components/SurveyForm/form3";
-import { submitSurvey } from "../../services/submissions";
+
+import { useSurvey } from "../../hooks/useSurvey";
 import { useAuthStore } from "../../store/authStore";
 import styles from "../../styles/survey.styles";
 
 const Survey = () => {
     const user = useAuthStore((state) => state.user);
 
-    const [step, setStep] = useState(1);
-    const [loading, setLoading] = useState(false);
+    const { draftId } = useLocalSearchParams();
+
+    console.log("id", draftId);
 
     const form1Ref = useRef(null);
     const form2Ref = useRef(null);
     const form3Ref = useRef(null);
 
-    const [formData, setFormData] = useState({
-        person_name: "",
-        phone_number: "",
-        address: "",
-        age: "",
-        education: "",
-        occupation: "",
-        has_house: null,
-        has_illness: null,
-        marital_status: "",
-        illness_details: "",
-    });
+    const {
+        formData,
+        step,
+        loading,
+        updateField,
+        nextStep,
+        previousStep,
+        submit,
+    } = useSurvey(user, draftId);
 
-    const updateField = (field, value) => {
-        setFormData((prev) => ({
-            ...prev,
-            [field]: value,
-        }));
-    };
 
+    // HANDLE NEXT
     const handleNext = () => {
         let valid = false;
 
@@ -56,36 +50,28 @@ const Survey = () => {
         }
 
         if (!valid) return;
-
-        setStep((prev) => prev + 1);
+        nextStep();
     };
 
+
+    // HANDLE BACK
     const handlePrevious = () => {
         if (step === 1) {
             router.back();
             return;
         }
-
-        setStep((prev) => prev - 1);
+        previousStep();
     };
+
+
+    // HANDLE SUBMIT
 
     const handleSubmit = async () => {
         const valid = form3Ref.current?.validate();
 
         if (!valid) return;
-
-        if (!user?.id) {
-            Alert.alert(
-                "Error",
-                "Employee information not found."
-            );
-            return;
-        }
-
         try {
-            setLoading(true);
-
-            await submitSurvey(user.id, formData);
+            await submit();
 
             Alert.alert(
                 "Success",
@@ -93,24 +79,25 @@ const Survey = () => {
                 [
                     {
                         text: "OK",
-                        onPress: () => router.replace("/"),
+                        onPress: () =>
+                            router.replace("/"),
                     },
                 ]
             );
+
         } catch (error) {
-            console.error("SUBMIT SURVEY ERROR:", error);
 
             Alert.alert(
                 "Error",
                 "Failed to submit survey."
             );
-        } finally {
-            setLoading(false);
         }
     };
 
+
     return (
         <View style={styles.container}>
+
             <Text style={styles.title}>
                 Start Survey
             </Text>
@@ -119,7 +106,11 @@ const Survey = () => {
                 Part {step} of 3
             </Text>
 
+
+            {/* FORM */}
+
             <View style={styles.formContainer}>
+
                 {step === 1 && (
                     <Form1
                         ref={form1Ref}
@@ -144,43 +135,53 @@ const Survey = () => {
                         updateField={updateField}
                     />
                 )}
+
             </View>
 
+
+            {/* BUTTONS */}
+
             <View style={styles.buttonRow}>
+
                 {step > 1 && (
+
                     <TouchableOpacity
                         onPress={handlePrevious}
-                        style={styles.previousButton}
-                    >
+                        style={styles.previousButton}>
                         <Text style={styles.previousButtonText}>
                             Previous
                         </Text>
                     </TouchableOpacity>
                 )}
 
+
                 {step < 3 ? (
+
                     <TouchableOpacity
                         onPress={handleNext}
-                        style={styles.nextButton}
-                    >
+                        style={styles.nextButton} >
                         <Text style={styles.buttonText}>
                             Next
                         </Text>
                     </TouchableOpacity>
+
                 ) : (
+
                     <TouchableOpacity
                         onPress={handleSubmit}
                         disabled={loading}
-                        style={styles.nextButton}
-                    >
+                        style={styles.nextButton}>
                         <Text style={styles.buttonText}>
                             {loading
                                 ? "Submitting..."
                                 : "Submit Survey"}
                         </Text>
                     </TouchableOpacity>
+
                 )}
+
             </View>
+
         </View>
     );
 };
