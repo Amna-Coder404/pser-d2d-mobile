@@ -2,7 +2,8 @@ const COLOR = {
     primary: "#2563EB",
     primaryDark: "#1D4ED8",
 
-    background: "#F8FAFC",
+    profileCard: "#733faf",
+    background: "#f0f0f0",
     surface: "#FFFFFF",
 
     text: "#111827",

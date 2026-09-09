@@ -5,6 +5,7 @@ import SafeAreaWrapper from "../../components/SafeAreaWrapper";
 import { supabase } from "../../lib/supabase";
 import { useAuthStore } from "../../store/authStore";
 
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   getCurrentSession,
   getEmployeeProfile,
@@ -96,12 +97,11 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaWrapper>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      />
-    </SafeAreaWrapper>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaWrapper>
+        {/* We use Drawer here instead of Stack to enable the side menu slider */}
+        <Stack screenOptions={{ headerShown: false }} />
+      </SafeAreaWrapper>
+    </GestureHandlerRootView>
   );
 }

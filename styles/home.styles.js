@@ -8,18 +8,68 @@ const styles = StyleSheet.create({
         paddingTop: 24,
         backgroundColor: COLOR.background,
     },
+    headerCard: {
+        backgroundColor: COLOR.primary,
 
-    // Profile Header
+        borderRadius: 16,
+        padding: 16,
+        marginBottom: 20,
+    },
+
+    appHeader: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 18,
+    },
+
+    appLogo: {
+        width: 48,
+        height: 48,
+    },
+
+    appTitle: {
+        flex: 1,
+        fontSize: 22,
+        fontWeight: "700",
+        color: COLOR.white,
+        marginLeft: 10,
+    },
+
+    menuButton: {
+        width: 44,
+        height: 44,
+        borderRadius: 12,
+        // backgroundColor: COLOR.profileCard,
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 1,
+        borderColor: COLOR.border,
+    },
+
     profileHeader: {
         flexDirection: "row",
         alignItems: "center",
-        padding: 18,
-        borderRadius: 18,
-        backgroundColor: COLOR.surface,
-        borderWidth: 1,
-        borderColor: COLOR.border,
-        marginBottom: 28,
     },
+
+    profileInfo: {
+        flex: 1,
+        marginLeft: 12,
+    },
+
+    name: {
+        fontSize: 19,
+        fontWeight: "700",
+        color: COLOR.white,
+    },
+
+    role: {
+        fontSize: 14,
+        color: COLOR.white,
+        marginTop: 3,
+    },
+
+
+
 
     avatar: {
         width: 58,
@@ -31,35 +81,8 @@ const styles = StyleSheet.create({
         marginRight: 14,
     },
 
-    avatarText: {
-        fontSize: 24,
-        fontWeight: "700",
-        color: COLOR.white,
-    },
 
-    profileInfo: {
-        flex: 1,
-    },
 
-    name: {
-        fontSize: 19,
-        fontWeight: "700",
-        color: COLOR.text,
-        marginBottom: 3,
-    },
-
-    role: {
-        fontSize: 14,
-        fontWeight: "500",
-        color: COLOR.primary,
-        textTransform: "capitalize",
-        marginBottom: 3,
-    },
-
-    block: {
-        fontSize: 13,
-        color: COLOR.textSecondary,
-    },
 
     // Dashboard Title
     titleSection: {
@@ -132,6 +155,10 @@ const styles = StyleSheet.create({
         color: COLOR.primary,
         marginLeft: 10,
     },
+
+
+
+
 });
 
 export default styles;

@@ -66,3 +66,32 @@ export const logoutEmployee = async () => {
 }
 
 
+// Change Passoword
+
+export const changePassword = async (oldPwd, newPwd) => {
+
+    const { data: { user }, error: userError, } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+        throw new Error("User not found.");
+    }
+
+    const email = user.email;
+
+    const { error: passwordError } = await supabase.auth.signInWithPassword({ email, password: oldPwd });
+
+    if (passwordError) {
+        throw new Error("Old password is incorrect.");
+    }
+
+    // Update password
+    const { error: updateError } = await supabase.auth.updateUser({ password: newPwd });
+
+    if (updateError) {
+        throw updateError;
+    }
+
+    return true;
+}
+
+
