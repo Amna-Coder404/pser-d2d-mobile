@@ -12,6 +12,8 @@ export const submitSurvey = async (employeeId, surveyData) => {
 
     const {
         person_name,
+        cnic,
+        person_image_url,
         phone_number,
         address,
         age,
@@ -28,6 +30,8 @@ export const submitSurvey = async (employeeId, surveyData) => {
         .insert({
             employee_id: employeeId,
             person_name: person_name.trim(),
+            cnic: cnic.trim(),
+            person_image_url: person_image_url || null,
             phone_number: phone_number.trim(),
             address: address.trim(),
             age: Number(age),

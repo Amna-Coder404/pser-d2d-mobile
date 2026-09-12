@@ -7,6 +7,7 @@ import { getMySurveys } from "../../services/submissions";
 import { useAuthStore } from '../../store/authStore';
 
 import { Ionicons } from '@expo/vector-icons';
+import NotFound from '../../components/NotFound';
 import COLOR from '../../constant/colors';
 import styles from '../../styles/mySurveys.styles';
 
@@ -61,6 +62,12 @@ const MySurveys = () => {
                     <SurveyCard item={item} />
                 )}
                 showsVerticalScrollIndicator={false}
+                ListEmptyComponent={<NotFound text={"No  surveys found."} />}
+                contentContainerStyle={
+                    surveys.length === 0 && {
+                        flexGrow: 1,
+                    }
+                }
             />
         </View>
     )

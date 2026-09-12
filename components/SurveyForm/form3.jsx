@@ -74,9 +74,7 @@ const Form3 = forwardRef(({ data, updateField }, ref) => {
         return Object.keys(newErrors).length === 0;
     };
 
-    useImperativeHandle(ref, () => ({
-        validate,
-    }));
+    useImperativeHandle(ref, () => ({ validate, }));
 
     return (
         <View>

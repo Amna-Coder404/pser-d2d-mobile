@@ -1,4 +1,6 @@
+import * as ImagePicker from "expo-image-picker";
 import { useEffect, useRef, useState } from "react";
+import { uploadPersonImage } from "../lib/storage";
 
 import {
     deleteDraft,
@@ -12,6 +14,8 @@ import { submitSurvey } from "../services/submissions";
 const initialFormData = {
     person_name: "",
     phone_number: "",
+    cnic: "",
+    person_image_url: "",
     address: "",
     age: "",
     education: "",
@@ -25,9 +29,7 @@ const initialFormData = {
 export const useSurvey = (user, draftId) => {
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
-
     const [formData, setFormData] = useState(initialFormData);
-
     const [activeDraftId, setActiveDraftId] = useState(draftId || null);
 
     const isInitialLoad = useRef(true);
@@ -40,7 +42,6 @@ export const useSurvey = (user, draftId) => {
             [field]: value,
         }));
     };
-
 
     // LOAD EXISTING DRAFT
     useEffect(() => {
@@ -58,6 +59,8 @@ export const useSurvey = (user, draftId) => {
                 setFormData({
                     person_name: draft.person_name || "",
                     phone_number: draft.phone_number || "",
+                    cnic: draft.cnic || "",
+                    person_image_url: draft.person_image_url || "",
                     address: draft.address || "",
                     age: draft.age || "",
                     education: draft.education || "",
@@ -69,7 +72,6 @@ export const useSurvey = (user, draftId) => {
                 });
 
                 setStep(draft.current_step || 1);
-
                 setActiveDraftId(draft.id);
 
             } catch (error) {
@@ -81,25 +83,17 @@ export const useSurvey = (user, draftId) => {
         };
 
         loadDraft();
-
     }, [draftId, user?.id]);
 
-
     // CHECK IF FORM HAS DATA
-
     const hasFormData = Object.values(formData).some(
-        (value) =>
-            value !== "" &&
-            value !== null
+        (value) => value !== "" && value !== null
     );
-
 
     // AUTO SAVE DRAFT
     useEffect(() => {
         if (!user?.id) return;
-
         if (isInitialLoad.current) return;
-
         if (!hasFormData) return;
 
         const timer = setTimeout(async () => {
@@ -115,9 +109,10 @@ export const useSurvey = (user, draftId) => {
                         formData,
                         step
                     );
-
                 } else {
-                    const newDraft = await saveDraft(user.id, formData,
+                    const newDraft = await saveDraft(
+                        user.id,
+                        formData,
                         step
                     );
 
@@ -126,12 +121,9 @@ export const useSurvey = (user, draftId) => {
 
             } catch (error) {
                 console.error("AUTO SAVE DRAFT ERROR:", error);
-
             } finally {
                 isSaving.current = false;
-
             }
-
         }, 1500);
 
         return () => clearTimeout(timer);
@@ -144,40 +136,38 @@ export const useSurvey = (user, draftId) => {
         hasFormData,
     ]);
 
-
     // NEXT STEP
     const nextStep = () => {
-        setStep((prev) =>
-            prev < 3 ? prev + 1 : prev
-        );
+        setStep((prev) => (prev < 3 ? prev + 1 : prev));
     };
 
     // PREVIOUS STEP
     const previousStep = () => {
-        setStep((prev) =>
-            prev > 1 ? prev - 1 : prev
-        );
+        setStep((prev) => (prev > 1 ? prev - 1 : prev));
     };
-
 
     // SUBMIT SURVEY
     const submit = async () => {
         if (!user?.id) {
-            throw new Error(
-                "Employee information not found."
-            );
+            throw new Error("Employee information not found.");
         }
 
         try {
             setLoading(true);
 
-            // Submit completed survey
-            await submitSurvey(
-                user.id,
-                formData
-            );
+            let imageUrl = null;
 
-            // Delete draft after successful submission
+            if (formData.person_image_url) {
+                imageUrl = await uploadPersonImage(
+                    formData.person_image_url
+                );
+            }
+
+            await submitSurvey(user.id, {
+                ...formData,
+                person_image_url: imageUrl,
+            });
+
             if (activeDraftId) {
                 await deleteDraft(
                     activeDraftId,
@@ -185,7 +175,6 @@ export const useSurvey = (user, draftId) => {
                 );
             }
 
-            // Reset survey
             setFormData(initialFormData);
             setStep(1);
             setActiveDraftId(null);
@@ -193,8 +182,7 @@ export const useSurvey = (user, draftId) => {
             return true;
 
         } catch (error) {
-
-            console.error("SUBMIT SURVEY ERROR:", error);
+            console.error("FULL SUBMIT ERROR:", error);
             throw error;
 
         } finally {
@@ -202,19 +190,53 @@ export const useSurvey = (user, draftId) => {
         }
     };
 
+    // IMAGE PICKER
+    const pickPersonImage = async (type) => {
+        let result;
+
+        if (type === "camera") {
+            const permission =
+                await ImagePicker.requestCameraPermissionsAsync();
+
+            if (!permission.granted) return;
+
+            result = await ImagePicker.launchCameraAsync({
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 0.8,
+            });
+
+        } else {
+            const permission =
+                await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+            if (!permission.granted) return;
+
+            result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ["images"],
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 0.8,
+            });
+        }
+
+        if (!result.canceled) {
+            updateField(
+                "person_image_url",
+                result.assets[0].uri
+            );
+        }
+    };
 
     return {
         formData,
         step,
         loading,
-
         updateField,
-
         nextStep,
         previousStep,
-
         submit,
-
         activeDraftId,
+        pickPersonImage,
     };
 };

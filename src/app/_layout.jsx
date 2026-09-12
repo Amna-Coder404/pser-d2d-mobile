@@ -11,6 +11,10 @@ import {
   getEmployeeProfile,
 } from "../../services/auth";
 
+import { PaperProvider } from "react-native-paper";
+
+
+
 
 export default function RootLayout() {
   const [loading, setLoading] = useState(true);
@@ -97,11 +101,13 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaWrapper>
-        {/* We use Drawer here instead of Stack to enable the side menu slider */}
-        <Stack screenOptions={{ headerShown: false }} />
-      </SafeAreaWrapper>
-    </GestureHandlerRootView>
+    <PaperProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <SafeAreaWrapper>
+          {/* We use Drawer here instead of Stack to enable the side menu slider */}
+          <Stack screenOptions={{ headerShown: false }} />
+        </SafeAreaWrapper>
+      </GestureHandlerRootView>
+    </PaperProvider>
   );
 }

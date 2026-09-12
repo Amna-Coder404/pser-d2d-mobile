@@ -22,23 +22,22 @@ export default function Home() {
 
     useEffect(() => {
         const loadProfileImage = async () => {
-            console.log("IMAGE PATH:", user?.profile_image_url);
 
             if (!user?.profile_image_url) {
-                console.log("NO IMAGE PATH");
+
                 setProfileImageUrl(null);
                 return;
             }
 
             const url = await getImageUrl(user.profile_image_url);
 
-            console.log("SIGNED IMAGE URL:", url);
-
             setProfileImageUrl(url);
         };
 
         loadProfileImage();
     }, [user?.profile_image_url]);
+
+
     const navigation = useNavigation();
     const handleOpenDrawer = () => {
         navigation.openDrawer();

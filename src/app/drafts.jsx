@@ -113,6 +113,11 @@ const DraftsSurvey = () => {
                 )}
                 showsVerticalScrollIndicator={false}
                 ListEmptyComponent={<NotFound text={"No draft surveys found."} />}
+                contentContainerStyle={
+                    drafts.length === 0 && {
+                        flexGrow: 1,
+                    }
+                }
             />
 
 

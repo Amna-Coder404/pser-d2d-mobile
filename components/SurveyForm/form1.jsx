@@ -9,7 +9,7 @@ import {
 import COLOR from "../../constant/colors";
 import styles from "../../styles/survey.styles";
 
-const Form1 = forwardRef(({ data, updateField, onBack }, ref) => {
+const Form1 = forwardRef(({ data, updateField, onBack, pickPersonImage }, ref) => {
     const [errors, setErrors] = useState({});
 
     const validate = () => {
@@ -52,9 +52,7 @@ const Form1 = forwardRef(({ data, updateField, onBack }, ref) => {
         }
     };
 
-    useImperativeHandle(ref, () => ({
-        validate,
-    }));
+    useImperativeHandle(ref, () => ({ validate, }));
 
     return (
         <View style={styles.content}>
@@ -103,9 +101,7 @@ const Form1 = forwardRef(({ data, updateField, onBack }, ref) => {
                 keyboardType="phone-pad"
                 maxLength={11}
                 value={data.phone_number}
-                onChangeText={(value) =>
-                    handleChange("phone_number", value)
-                }
+                onChangeText={(value) => handleChange("phone_number", value)}
             />
 
             {errors.phone_number ? (

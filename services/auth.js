@@ -32,7 +32,7 @@ export const getEmployeeProfile = async (userId) => {
     const { data, error } = await supabase
         .from("profiles")
         .select(
-            "id, full_name, role, cnic, block_assign_number, profile_image_url"
+            "id, full_name, role, cnic, block_assign_number, profile_image_url, is_active"
         )
         .eq("id", userId)
         .single();
@@ -50,7 +50,9 @@ export const getEmployeeProfile = async (userId) => {
     if (data.role !== "employee") {
         throw new Error("Access denied. Employee account required.");
     }
-
+    if (!data.is_active) {
+        throw new Error("Your employee account is inactive. Please contact the admin.");
+    }
     return data;
 }
 

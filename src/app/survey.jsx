@@ -34,6 +34,7 @@ const Survey = () => {
         nextStep,
         previousStep,
         submit,
+        pickPersonImage
     } = useSurvey(user, draftId);
 
 
@@ -124,6 +125,7 @@ const Survey = () => {
                     <Form2
                         ref={form2Ref}
                         data={formData}
+                        pickImage={pickPersonImage}
                         updateField={updateField}
                     />
                 )}

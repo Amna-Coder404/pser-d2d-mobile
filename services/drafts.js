@@ -10,6 +10,8 @@ export const saveDraft = async (employeeId, draftData, currentStep) => {
     const {
         person_name,
         phone_number,
+        cnic,
+        person_image_url,
         address,
         age,
         education,
@@ -25,6 +27,9 @@ export const saveDraft = async (employeeId, draftData, currentStep) => {
         .insert({
             employee_id: employeeId,
             current_step: currentStep,
+
+            cnic: cnic?.trim() || "",
+            person_image_url: person_image_url || null,
 
             person_name: person_name.trim(),
             phone_number: phone_number.trim(),
@@ -96,11 +101,7 @@ export const getDraft = async (draftId, employeeId) => {
 
 
 // Update an existing draft
-export const updateDraft = async (
-    draftId,
-    employeeId,
-    draftData,
-    currentStep
+export const updateDraft = async (draftId, employeeId, draftData, currentStep
 ) => {
 
     if (!draftId || !employeeId) {
@@ -110,6 +111,8 @@ export const updateDraft = async (
     const {
         person_name,
         phone_number,
+        cnic,
+        person_image_url,
         address,
         age,
         education,
@@ -128,6 +131,10 @@ export const updateDraft = async (
 
             person_name: person_name.trim(),
             phone_number: phone_number.trim(),
+
+            cnic: cnic?.trim() || "",
+            person_image_url: person_image_url || null,
+
             address: address.trim(),
             age: age.trim(),
 
