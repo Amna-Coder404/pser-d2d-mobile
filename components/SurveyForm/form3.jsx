@@ -130,7 +130,7 @@ const Form3 = forwardRef(({ data, updateField }, ref) => {
             </View>
 
             {errors.has_house ? (
-                <Text style={styles.error}>
+                <Text style={styles.errors}>
                     {errors.has_house}
                 </Text>
             ) : null}
@@ -183,7 +183,7 @@ const Form3 = forwardRef(({ data, updateField }, ref) => {
             </View>
 
             {errors.has_illness ? (
-                <Text style={styles.error}>
+                <Text style={styles.errors}>
                     {errors.has_illness}
                 </Text>
             ) : null}
@@ -209,30 +209,66 @@ const Form3 = forwardRef(({ data, updateField }, ref) => {
                     />
 
                     {errors.illness_details ? (
-                        <Text style={styles.error}>
+                        <Text style={styles.errors}>
                             {errors.illness_details}
                         </Text>
                     ) : null}
                 </>
             )}
 
+
+
             {/* Marital Status */}
             <Text style={styles.label}>
                 Marital Status *
             </Text>
 
-            <TextInput
-                style={styles.input}
-                placeholder="Enter marital status"
-                placeholderTextColor="#888888"
-                value={data.marital_status}
-                onChangeText={(value) =>
-                    handleChange("marital_status", value)
-                }
-            />
+            <View style={styles.options}>
+                <TouchableOpacity
+                    style={[
+                        styles.option,
+                        data.marital_status === "Married" &&
+                        styles.selectedOption,
+                    ]}
+                    onPress={() => handleChange("marital_status", "Married")}
+                >
+                    <Text
+                        style={[
+                            styles.optionText,
+                            data.marital_status === "Married" &&
+                            styles.selectedOptionText,
+                        ]}
+                    >
+                        {data.marital_status === "Married" ? "✓ " : ""}
+                        Married
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={[
+                        styles.option,
+                        data.marital_status === "Unmarried" &&
+                        styles.selectedOption,
+                    ]}
+                    onPress={() =>
+                        handleChange("marital_status", "Unmarried")
+                    }
+                >
+                    <Text
+                        style={[
+                            styles.optionText,
+                            data.marital_status === "Unmarried" &&
+                            styles.selectedOptionText,
+                        ]}
+                    >
+                        {data.marital_status === "Unmarried" ? "✓ " : ""}
+                        Unmarried
+                    </Text>
+                </TouchableOpacity>
+            </View>
 
             {errors.marital_status ? (
-                <Text style={styles.error}>
+                <Text style={styles.errors}>
                     {errors.marital_status}
                 </Text>
             ) : null}

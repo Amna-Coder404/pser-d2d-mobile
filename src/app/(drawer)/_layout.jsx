@@ -42,7 +42,7 @@ export default function DrawerLayout() {
                     <View style={styles.drawerContent}>
 
                         <Image
-                            source={require("../../../assets/images/pser-survey-punjab.webp")}
+                            source={require("../../../assets/images/pser-survey-punjab.png")}
                             style={styles.drawerImage}
                         />
 

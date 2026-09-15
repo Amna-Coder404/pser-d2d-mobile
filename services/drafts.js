@@ -101,9 +101,12 @@ export const getDraft = async (draftId, employeeId) => {
 
 
 // Update an existing draft
-export const updateDraft = async (draftId, employeeId, draftData, currentStep
+export const updateDraft = async (
+    draftId,
+    employeeId,
+    draftData,
+    currentStep
 ) => {
-
     if (!draftId || !employeeId) {
         throw new Error("Draft ID and Employee ID are required.");
     }
@@ -122,7 +125,6 @@ export const updateDraft = async (draftId, employeeId, draftData, currentStep
         marital_status,
         illness_details,
     } = draftData;
-
 
     const { data, error } = await supabase
         .from("pser_drafts")
@@ -144,6 +146,7 @@ export const updateDraft = async (draftId, employeeId, draftData, currentStep
             has_house,
             has_illness,
             marital_status: marital_status.trim(),
+
             illness_details:
                 has_illness === true
                     ? illness_details?.trim() || ""
@@ -151,16 +154,20 @@ export const updateDraft = async (draftId, employeeId, draftData, currentStep
         })
         .eq("id", draftId)
         .eq("employee_id", employeeId)
-        .select()
-        .single();
+        .select();
 
     if (error) {
         console.error("UPDATE DRAFT ERROR:", error);
         throw error;
     }
 
-    return data;
-}
+    // Draft ID exists in state, but matching row no longer exists
+    if (!data || data.length === 0) {
+        throw new Error("Draft not found.");
+    }
+
+    return data[0];
+};
 
 
 // Delete a draft

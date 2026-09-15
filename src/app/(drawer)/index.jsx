@@ -1,6 +1,7 @@
 import { router, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 import {
+    ActivityIndicator,
     Image,
     Text,
     TouchableOpacity,
@@ -13,21 +14,21 @@ import { getImageUrl } from "../../../lib/storage";
 import { useAuthStore } from "../../../store/authStore";
 import styles from "../../../styles/home.styles";
 
-
-
 export default function Home() {
     const user = useAuthStore((state) => state.user);
 
     const [profileImageUrl, setProfileImageUrl] = useState(null);
+    const [imageLoading, setImageLoading] = useState(false);
 
     useEffect(() => {
         const loadProfileImage = async () => {
-
             if (!user?.profile_image_url) {
-
                 setProfileImageUrl(null);
+                setImageLoading(false);
                 return;
             }
+
+            setImageLoading(true);
 
             const url = await getImageUrl(user.profile_image_url);
 
@@ -37,21 +38,22 @@ export default function Home() {
         loadProfileImage();
     }, [user?.profile_image_url]);
 
-
     const navigation = useNavigation();
+
     const handleOpenDrawer = () => {
         navigation.openDrawer();
-    }
+    };
 
     return (
         <View style={styles.container}>
+
             {/* App + Profile Header Card */}
             <View style={styles.headerCard}>
 
                 {/* APP Header */}
                 <View style={styles.appHeader}>
                     <Image
-                        source={require("../../../assets/images/pser-survey-punjab.webp")}
+                        source={require("../../../assets/images/pser-survey-punjab.png")}
                         style={styles.appLogo}
                         resizeMode="contain"
                     />
@@ -75,19 +77,39 @@ export default function Home() {
 
                 {/* Profile Header */}
                 <View style={styles.profileHeader}>
-                    {profileImageUrl ? (
-                        <Image
-                            source={{ uri: profileImageUrl }}
-                            style={styles.avatar}
-                            resizeMode="cover"
-                        />
-                    ) : (
+
+                    {/* Avatar */}
+                    <View style={styles.avatarContainer}>
+
+                        {/* Initial Letter */}
                         <View style={styles.avatar}>
                             <Text style={styles.avatarText}>
                                 {user?.full_name?.charAt(0)?.toUpperCase() || "U"}
                             </Text>
                         </View>
-                    )}
+
+                        {/* Profile Image */}
+                        {profileImageUrl && (
+                            <Image
+                                source={{ uri: profileImageUrl }}
+                                style={styles.avatarImage}
+                                resizeMode="cover"
+                                onLoadEnd={() => setImageLoading(false)}
+                                onError={() => {
+                                    setProfileImageUrl(null);
+                                    setImageLoading(false);
+                                }}
+                            />
+                        )}
+
+                        {/* Loader for Image */}
+                        {imageLoading && (
+                            <View style={styles.avatarLoader}>
+                                <ActivityIndicator size="small" color={COLOR.primary} />
+                            </View>
+                        )}
+
+                    </View>
 
                     <View style={styles.profileInfo}>
                         <Text style={styles.name}>
@@ -97,9 +119,8 @@ export default function Home() {
                         <Text style={styles.role}>
                             {user?.cnic} / {user?.block_assign_number}
                         </Text>
-
-
                     </View>
+
                 </View>
 
             </View>
@@ -124,7 +145,11 @@ export default function Home() {
                     </Text>
                 </View>
 
-                <Ionicons name='arrow-forward' color={COLOR.primary} size={23} />
+                <Ionicons
+                    name="arrow-forward"
+                    color={COLOR.primary}
+                    size={23}
+                />
             </TouchableOpacity>
 
             {/* My Surveys */}
@@ -147,15 +172,19 @@ export default function Home() {
                     </Text>
                 </View>
 
-                <Ionicons name='arrow-forward' color={COLOR.primary} size={23} />
+                <Ionicons
+                    name="arrow-forward"
+                    color={COLOR.primary}
+                    size={23}
+                />
             </TouchableOpacity>
 
             {/* Start Survey */}
             <TouchableOpacity
                 style={[styles.card, styles.startCard]}
                 onPress={() => router.push("/survey")}
-                activeOpacity={0.8} >
-
+                activeOpacity={0.8}
+            >
                 <View style={styles.cardIcon}>
                     <Ionicons name="create-outline" style={styles.iconText} />
                 </View>
@@ -170,7 +199,11 @@ export default function Home() {
                     </Text>
                 </View>
 
-                <Ionicons name='arrow-forward' color={COLOR.primary} size={23} />
+                <Ionicons
+                    name="arrow-forward"
+                    color={COLOR.primary}
+                    size={23}
+                />
             </TouchableOpacity>
 
         </View>

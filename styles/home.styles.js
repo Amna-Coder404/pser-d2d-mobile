@@ -18,13 +18,22 @@ const styles = StyleSheet.create({
 
     appHeader: {
         flexDirection: "row",
-        alignItems: "center",
+        // alignItems: "center",
         marginBottom: 18,
     },
 
     appLogo: {
-        width: 48,
-        height: 48,
+        width: 50,
+        height: 50,
+        borderRadius: 44,
+        backgroundColor: COLOR.white,
+
+        borderWidth: 2,
+        borderColor: COLOR.white,
+
+        marginBottom: 14,
+
+        borderColor: COLOR.primaryDark
     },
 
     appTitle: {
@@ -49,6 +58,9 @@ const styles = StyleSheet.create({
     profileHeader: {
         flexDirection: "row",
         alignItems: "center",
+        backgroundColor: COLOR.profileCard,
+        borderRadius: 12,
+        padding: 12
     },
 
     profileInfo: {
@@ -71,16 +83,43 @@ const styles = StyleSheet.create({
 
 
 
-    avatar: {
-        width: 58,
-        height: 58,
-        borderRadius: 29,
-        backgroundColor: COLOR.primary,
-        justifyContent: "center",
-        alignItems: "center",
+    avatarContainer: {
+        width: 70,
+        height: 70,
         marginRight: 14,
     },
 
+    avatar: {
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: COLOR.primary,
+    },
+
+    avatarImage: {
+        position: "absolute",
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+    },
+
+    avatarLoader: {
+        position: "absolute",
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(255,255,255,0.7)",
+    },
+
+    avatarText: {
+        fontSize: 28,
+        fontWeight: "700",
+        color: COLOR.white,
+    },
 
 
 
@@ -115,6 +154,8 @@ const styles = StyleSheet.create({
 
     startCard: {
         borderColor: COLOR.primary,
+        backgroundColor: "rgba(3, 121, 72, 0.18)",
+
     },
 
     cardIcon: {

@@ -1,10 +1,8 @@
-import { Ionicons } from "@expo/vector-icons";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import {
     Text,
     TextInput,
-    TouchableOpacity,
-    View,
+    View
 } from "react-native";
 import COLOR from "../../constant/colors";
 import styles from "../../styles/survey.styles";
@@ -56,17 +54,6 @@ const Form1 = forwardRef(({ data, updateField, onBack, pickPersonImage }, ref) =
 
     return (
         <View style={styles.content}>
-
-            {/* Header */}
-            <View style={styles.header}>
-                <TouchableOpacity style={styles.backButton} onPress={onBack}   >
-                    <Ionicons name="arrow-back" size={24} color={COLOR.primary} />
-                </TouchableOpacity>
-
-                <Text style={styles.title}>
-                    Personal Information
-                </Text>
-            </View>
             {/* Person Name */}
             <Text style={styles.label}>
                 Person Name *

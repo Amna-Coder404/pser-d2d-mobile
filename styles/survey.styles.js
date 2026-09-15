@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLOR.background,
         paddingHorizontal: 24,
-        paddingVertical: 40,
+
     },
 
     content: {
@@ -94,7 +94,9 @@ const styles = StyleSheet.create({
         borderColor: COLOR.border,
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: 18,
+        // marginBottom: 18,
+        backgroundColor: "red",
+
     },
 
     stepText: {
@@ -111,6 +113,7 @@ const styles = StyleSheet.create({
     buttonRow: {
         flexDirection: "row",
         gap: 10,
+        marginTop: 22
     },
 
     previousButton: {
@@ -148,7 +151,8 @@ const styles = StyleSheet.create({
     picker: {
         backgroundColor: COLOR.surface,
 
-    }
+    },
+
 });
 
 export default styles;

@@ -1,17 +1,15 @@
+
 import { StyleSheet } from "react-native";
+
 import COLOR from "../constant/colors";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLOR.background,
-        paddingHorizontal: 20
+        paddingHorizontal: 16,
+        paddingTop: 20,
     },
-
-    content: {
-        padding: 20,
-    },
-
     header: {
         marginBottom: 20,
     },
@@ -45,100 +43,145 @@ const styles = StyleSheet.create({
         lineHeight: 21,
     },
 
+    // Draft Card
     draftCard: {
         backgroundColor: COLOR.surface,
+        borderRadius: 20,
+        padding: 16,
+        marginBottom: 14,
+
         borderWidth: 1,
         borderColor: COLOR.border,
-        borderRadius: 14,
-        padding: 16,
-        marginBottom: 12,
+
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.08,
+        shadowRadius: 10,
+        elevation: 3,
     },
 
-    draftTitle: {
-        fontSize: 17,
-        fontWeight: "600",
-        color: COLOR.text,
-        marginBottom: 6,
-    },
-
-    draftText: {
-        fontSize: 14,
-        color: COLOR.textSecondary,
-        lineHeight: 20,
-    },
-
-    draftDate: {
-        fontSize: 12,
-        color: COLOR.placeholder,
-        marginTop: 10,
-    },
-
-    emptyContainer: {
-        alignItems: "center",
-        justifyContent: "center",
-        paddingVertical: 60,
-    },
-
-    emptyText: {
-        fontSize: 15,
-        color: COLOR.textSecondary,
-        textAlign: "center",
-    },
-
-    button: {
-        backgroundColor: COLOR.primary,
-        height: 48,
-        borderRadius: 10,
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 16,
-    },
-
-    buttonText: {
-        color: COLOR.white,
-        fontSize: 15,
-        fontWeight: "600",
-    },
-
-    // Draft Card
-    darftCard: {
-        borderWidth: 1,
-        borderRadius: 10,
+    // Top
+    topSection: {
         flexDirection: "row",
-        justifyContent: "space-between",
-        overflow: "hidden",
+        alignItems: "center",
+    },
+
+    personIcon: {
+        width: 48,
+        height: 48,
+        borderRadius: 14,
+        backgroundColor: "#EFF6FF",
+        alignItems: "center",
+        justifyContent: "center",
+        marginRight: 12,
+    },
+
+    nameContainer: {
+        flex: 1,
+        marginRight: 8,
     },
 
     name: {
-        fontSize: 18,
-        fontWeight: "bold",
+        fontSize: 17,
+        fontWeight: "700",
+        color: COLOR.text,
     },
 
-    leftBtn: {
-        flex: 1,
-        padding: 14,
-        gap: 4,
-        justifyContent: "center",
+    draftLabel: {
+        fontSize: 13,
+        color: COLOR.textSecondary,
+        marginTop: 3,
     },
 
-    rightBtn: {
-        backgroundColor: "#86000063",
-        width: 65,
+    stepBadge: {
+        backgroundColor: "#EFF6FF",
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 20,
+    },
+
+    stepText: {
+        fontSize: 12,
+        fontWeight: "700",
+        color: COLOR.primary,
+    },
+
+    // Progress
+    progressSection: {
+        marginTop: 18,
+    },
+
+    progressHeader: {
+        flexDirection: "row",
+        justifyContent: "space-between",
         alignItems: "center",
-        justifyContent: "center",
+        marginBottom: 7,
     },
 
-    conSur: {
+    progressLabel: {
+        fontSize: 13,
+        fontWeight: "600",
+        color: COLOR.textSecondary,
+    },
+
+    progressPercent: {
+        fontSize: 13,
+        fontWeight: "700",
+        color: COLOR.primary,
+    },
+
+    progressTrack: {
+        height: 7,
+        backgroundColor: COLOR.border,
+        borderRadius: 10,
+        overflow: "hidden",
+    },
+
+    progressFill: {
+        height: "100%",
+        backgroundColor: COLOR.primary,
+        borderRadius: 10,
+    },
+
+    // Actions
+    actions: {
         flexDirection: "row",
         alignItems: "center",
-        marginTop: 6,
+        marginTop: 18,
+        gap: 10,
     },
 
-    text: {
-        color: COLOR.primary,
-        fontWeight: "500",
-        fontSize: 17,
+    continueButton: {
+        flex: 1,
+        height: 48,
+        borderRadius: 13,
+        backgroundColor: COLOR.primary,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 8,
+    },
+
+    continueText: {
+        fontSize: 15,
+        fontWeight: "700",
+        color: COLOR.white,
+    },
+
+    deleteButton: {
+        width: 48,
+        height: 48,
+        borderRadius: 13,
+        backgroundColor: "#FEF2F2",
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 1,
+        borderColor: "#FECACA",
     },
 });
 
 export default styles;
+

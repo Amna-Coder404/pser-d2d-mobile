@@ -59,13 +59,19 @@ export const getEmployeeProfile = async (userId) => {
 
 
 // Logout current user 
-export const logoutEmployee = async () => {
-    const { error } = await supabase.auth.signOut();
 
-    if (error) {
-        throw new Error(error.message);
+export const logoutEmployee = async () => {
+    try {
+        await supabase.auth.signOut({
+            scope: "local",
+        });
+    } catch (error) {
+        console.log("LOGOUT ERROR:", error);
     }
-}
+
+    return true;
+};
+
 
 
 // Change Passoword

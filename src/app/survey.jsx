@@ -1,16 +1,19 @@
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useRef } from "react";
 import {
     Alert,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
     Text,
     TouchableOpacity,
-    View,
+    View
 } from "react-native";
 
 import Form1 from "../../components/SurveyForm/form1";
 import Form2 from "../../components/SurveyForm/form2";
 import Form3 from "../../components/SurveyForm/form3";
-
+import SurveyHeader from "../../components/SurveyHeader";
 import { useSurvey } from "../../hooks/useSurvey";
 import { useAuthStore } from "../../store/authStore";
 import styles from "../../styles/survey.styles";
@@ -20,7 +23,7 @@ const Survey = () => {
 
     const { draftId } = useLocalSearchParams();
 
-    console.log("id", draftId);
+    const router = useRouter();
 
     const form1Ref = useRef(null);
     const form2Ref = useRef(null);
@@ -97,94 +100,102 @@ const Survey = () => {
 
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === "ios" ? "padding" : "padding"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+        >
+            <View style={styles.container}>
 
-            <Text style={styles.title}>
-                Start Survey
-            </Text>
+                <ScrollView
+                    style={styles.formContainer}
+                    contentContainerStyle={styles.formContent}
+                    showsVerticalScrollIndicator={false}
+                    keyboardShouldPersistTaps="handled"
+                    keyboardDismissMode="on-drag"
+                >
 
-            <Text style={styles.stepText}>
-                Part {step} of 3
-            </Text>
+                    {step === 1 && (
+                        <>
+                            <SurveyHeader currentStep={step} />
 
+                            <Form1
+                                ref={form1Ref}
+                                data={formData}
+                                updateField={updateField}
+                                onBack={handlePrevious}
+                            />
+                        </>
+                    )}
 
-            {/* FORM */}
+                    {step === 2 && (
+                        <>
+                            <SurveyHeader currentStep={step} />
 
-            <View style={styles.formContainer}>
+                            <Form2
+                                ref={form2Ref}
+                                data={formData}
+                                pickImage={pickPersonImage}
+                                updateField={updateField}
+                            />
+                        </>
+                    )}
 
-                {step === 1 && (
-                    <Form1
-                        ref={form1Ref}
-                        data={formData}
-                        updateField={updateField}
-                        onBack={handlePrevious}
-                    />
-                )}
+                    {step === 3 && (
+                        <>
+                            <SurveyHeader currentStep={step} />
 
-                {step === 2 && (
-                    <Form2
-                        ref={form2Ref}
-                        data={formData}
-                        pickImage={pickPersonImage}
-                        updateField={updateField}
-                    />
-                )}
+                            <Form3
+                                ref={form3Ref}
+                                data={formData}
+                                updateField={updateField}
+                            />
+                        </>
+                    )}
 
-                {step === 3 && (
-                    <Form3
-                        ref={form3Ref}
-                        data={formData}
-                        updateField={updateField}
-                    />
-                )}
+                    {/* BUTTONS ARE NOW INSIDE SCROLLVIEW */}
+                    <View style={styles.buttonRow}>
+
+                        {step > 1 && (
+                            <TouchableOpacity
+                                onPress={handlePrevious}
+                                style={styles.previousButton}
+                            >
+                                <Text style={styles.previousButtonText}>
+                                    Previous
+                                </Text>
+                            </TouchableOpacity>
+                        )}
+
+                        {step < 3 ? (
+                            <TouchableOpacity
+                                onPress={handleNext}
+                                style={styles.nextButton}
+                            >
+                                <Text style={styles.buttonText}>
+                                    Next
+                                </Text>
+                            </TouchableOpacity>
+                        ) : (
+                            <TouchableOpacity
+                                onPress={handleSubmit}
+                                disabled={loading}
+                                style={styles.nextButton}
+                            >
+                                <Text style={styles.buttonText}>
+                                    {loading
+                                        ? "Submitting..."
+                                        : "Submit Survey"}
+                                </Text>
+                            </TouchableOpacity>
+                        )}
+
+                    </View>
+
+                </ScrollView>
 
             </View>
-
-
-            {/* BUTTONS */}
-
-            <View style={styles.buttonRow}>
-
-                {step > 1 && (
-
-                    <TouchableOpacity
-                        onPress={handlePrevious}
-                        style={styles.previousButton}>
-                        <Text style={styles.previousButtonText}>
-                            Previous
-                        </Text>
-                    </TouchableOpacity>
-                )}
-
-
-                {step < 3 ? (
-
-                    <TouchableOpacity
-                        onPress={handleNext}
-                        style={styles.nextButton} >
-                        <Text style={styles.buttonText}>
-                            Next
-                        </Text>
-                    </TouchableOpacity>
-
-                ) : (
-
-                    <TouchableOpacity
-                        onPress={handleSubmit}
-                        disabled={loading}
-                        style={styles.nextButton}>
-                        <Text style={styles.buttonText}>
-                            {loading
-                                ? "Submitting..."
-                                : "Submit Survey"}
-                        </Text>
-                    </TouchableOpacity>
-
-                )}
-
-            </View>
-
-        </View>
+        </KeyboardAvoidingView>
     );
 };
 

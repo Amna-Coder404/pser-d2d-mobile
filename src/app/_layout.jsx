@@ -1,5 +1,6 @@
 import { Stack, useRouter, useSegments } from "expo-router";
 import { useEffect, useState } from "react";
+
 import Loader from "../../components/Loader";
 import SafeAreaWrapper from "../../components/SafeAreaWrapper";
 import { supabase } from "../../lib/supabase";
@@ -13,9 +14,6 @@ import {
 
 import { PaperProvider } from "react-native-paper";
 
-
-
-
 export default function RootLayout() {
   const [loading, setLoading] = useState(true);
 
@@ -28,28 +26,48 @@ export default function RootLayout() {
   useEffect(() => {
     checkAuth();
 
-    // Listen for login/logout changes
-    const { data: { subscription }, } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
 
-        if (session?.user) {
-          try {
-            const profile = await getEmployeeProfile(
-              session.user.id
-            );
-            console.log("CURRENT USER:", profile);
-            setUser(profile);
-          } catch (error) {
-            console.log("PROFILE ERROR:", error);
-            setUser(null);
-          }
-        } else {
-          setUser(null);
-        }
+      console.log("AUTH EVENT:", event);
 
+      // Logout
+      if (!session?.user) {
+        setUser(null);
         setLoading(false);
+        return;
       }
-    );
+
+      // IMPORTANT:
+      // Do NOT set user here during SIGNED_IN.
+      //
+      // Login screen will validate the employee profile
+      // and then set the user itself.
+
+      if (event === "SIGNED_IN") {
+        console.log("SIGNED_IN - waiting for login validation");
+        return;
+      }
+
+      // For existing sessions / token refresh
+      if (event === "INITIAL_SESSION" || event === "TOKEN_REFRESHED") {
+        try {
+          const profile = await getEmployeeProfile(
+            session.user.id
+          );
+
+          console.log("CURRENT USER:", profile);
+
+          setUser(profile);
+        } catch (error) {
+          console.log("PROFILE ERROR:", error);
+          setUser(null);
+        } finally {
+          setLoading(false);
+        }
+      }
+    });
 
     return () => {
       subscription.unsubscribe();
@@ -61,13 +79,13 @@ export default function RootLayout() {
 
     const currentScreen = segments[0];
 
-    // User is NOT logged in
+    // Not logged in
     if (!user && currentScreen !== "login") {
       router.replace("/login");
       return;
     }
 
-    // User IS logged in but opens login screen
+    // Logged in
     if (user && currentScreen === "login") {
       router.replace("/");
     }
@@ -89,6 +107,7 @@ export default function RootLayout() {
       setUser(profile);
 
     } catch (error) {
+      console.log("CHECK AUTH ERROR:", error);
       setUser(null);
 
     } finally {
@@ -104,7 +123,6 @@ export default function RootLayout() {
     <PaperProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <SafeAreaWrapper>
-          {/* We use Drawer here instead of Stack to enable the side menu slider */}
           <Stack screenOptions={{ headerShown: false }} />
         </SafeAreaWrapper>
       </GestureHandlerRootView>
