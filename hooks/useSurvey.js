@@ -31,7 +31,8 @@ const initialFormData = {
     marital_status: "",
     illness_details: "",
 };
-// TODO
+
+
 export const useSurvey = (user, draftId) => {
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
@@ -156,11 +157,7 @@ export const useSurvey = (user, draftId) => {
 
                     // OFFLINE
                     if (!isOnline) {
-                        if (
-                            activeDraftId?.startsWith(
-                                "local-"
-                            )
-                        ) {
+                        if (activeDraftId?.startsWith("local-")) {
                             await updateLocalDraft(
                                 activeDraftId,
                                 user.id,
@@ -168,12 +165,11 @@ export const useSurvey = (user, draftId) => {
                                 step
                             );
                         } else {
-                            const newDraft =
-                                await saveLocalDraft(
-                                    user.id,
-                                    formData,
-                                    step
-                                );
+                            const newDraft = await saveLocalDraft(
+                                user.id,
+                                formData,
+                                step
+                            );
 
                             setActiveDraftId(
                                 newDraft.id
@@ -184,14 +180,9 @@ export const useSurvey = (user, draftId) => {
                     // ONLINE
                     else {
                         // Existing local draft
-                        if (
-                            activeDraftId?.startsWith(
-                                "local-"
-                            )
+                        if (activeDraftId?.startsWith("local-")
                         ) {
-                            await syncDrafts(
-                                user.id
-                            );
+                            await syncDrafts(user.id);
 
                             const localDraft =
                                 await getLocalDraft(
@@ -199,9 +190,7 @@ export const useSurvey = (user, draftId) => {
                                     user.id
                                 );
 
-                            if (
-                                localDraft?.remote_id
-                            ) {
+                            if (localDraft?.remote_id) {
                                 await updateDraft(
                                     localDraft.remote_id,
                                     user.id,
@@ -223,12 +212,11 @@ export const useSurvey = (user, draftId) => {
 
                         // New online draft
                         else {
-                            const newDraft =
-                                await saveDraft(
-                                    user.id,
-                                    formData,
-                                    step
-                                );
+                            const newDraft = await saveDraft(
+                                user.id,
+                                formData,
+                                step
+                            );
 
                             setActiveDraftId(
                                 newDraft.id
@@ -236,10 +224,7 @@ export const useSurvey = (user, draftId) => {
                         }
                     }
                 } catch (error) {
-                    console.error(
-                        "AUTO SAVE DRAFT ERROR:",
-                        error
-                    );
+                    console.error("AUTO SAVE DRAFT ERROR:", error);
                 } finally {
                     isSaving.current = false;
                 }
@@ -247,8 +232,7 @@ export const useSurvey = (user, draftId) => {
             1500
         );
 
-        return () =>
-            clearTimeout(timer);
+        return () => clearTimeout(timer);
     }, [
         formData,
         step,
@@ -275,9 +259,7 @@ export const useSurvey = (user, draftId) => {
     // SUBMIT SURVEY
     const submit = async () => {
         if (!user?.id) {
-            throw new Error(
-                "Employee information not found."
-            );
+            throw new Error("Employee information not found.");
         }
 
         try {
@@ -288,9 +270,7 @@ export const useSurvey = (user, draftId) => {
             // Upload person image
             if (formData.person_image_url) {
                 imageUrl =
-                    await uploadPersonImage(
-                        formData.person_image_url
-                    );
+                    await uploadPersonImage(formData.person_image_url);
             }
 
             // Submit final survey
@@ -305,8 +285,7 @@ export const useSurvey = (user, draftId) => {
             // DELETE DRAFT AFTER SUCCESS
             if (activeDraftId) {
                 if (
-                    activeDraftId.startsWith(
-                        "local-"
+                    activeDraftId.startsWith("local-"
                     )
                 ) {
                     const localDraft =
@@ -316,9 +295,7 @@ export const useSurvey = (user, draftId) => {
                         );
 
                     if (localDraft) {
-                        if (
-                            localDraft.remote_id
-                        ) {
+                        if (localDraft.remote_id) {
                             await deleteDraft(
                                 localDraft.remote_id,
                                 user.id
@@ -357,23 +334,18 @@ export const useSurvey = (user, draftId) => {
         let result;
 
         if (type === "camera") {
-            const permission =
-                await ImagePicker
-                    .requestCameraPermissionsAsync();
+            const permission = await ImagePicker.requestCameraPermissionsAsync();
 
             if (!permission.granted) return;
 
-            result =
-                await ImagePicker
-                    .launchCameraAsync({
-                        allowsEditing: true,
-                        aspect: [1, 1],
-                        quality: 0.8,
-                    });
+            result = await ImagePicker
+                .launchCameraAsync({
+                    allowsEditing: true,
+                    aspect: [1, 1],
+                    quality: 0.8,
+                });
         } else {
-            const permission =
-                await ImagePicker
-                    .requestMediaLibraryPermissionsAsync();
+            const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
             if (!permission.granted) return;
 
