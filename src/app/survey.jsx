@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
     Alert,
     KeyboardAvoidingView,
@@ -10,20 +10,24 @@ import {
     View
 } from "react-native";
 
+import OfflineCard from "../../components/Netinfo/OfflineCard";
 import Form1 from "../../components/SurveyForm/form1";
 import Form2 from "../../components/SurveyForm/form2";
 import Form3 from "../../components/SurveyForm/form3";
 import SurveyHeader from "../../components/SurveyHeader";
+import { useNetworkStatus } from "../../hooks/useNetworkStatus";
 import { useSurvey } from "../../hooks/useSurvey";
 import { useAuthStore } from "../../store/authStore";
 import styles from "../../styles/survey.styles";
 
 const Survey = () => {
     const user = useAuthStore((state) => state.user);
-
     const { draftId } = useLocalSearchParams();
 
     const router = useRouter();
+
+    const { isOnline } = useNetworkStatus();
+    const [showOfflineCard, setShowOfflineCard] = useState(false);
 
     const form1Ref = useRef(null);
     const form2Ref = useRef(null);
@@ -37,7 +41,8 @@ const Survey = () => {
         nextStep,
         previousStep,
         submit,
-        pickPersonImage
+        pickPersonImage,
+
     } = useSurvey(user, draftId);
 
 
@@ -69,31 +74,31 @@ const Survey = () => {
 
 
     // HANDLE SUBMIT
-
     const handleSubmit = async () => {
         const valid = form3Ref.current?.validate();
+
+        // Cannot submit while offline
+        if (!isOnline) {
+            setShowOfflineCard(true);
+            return;
+        }
 
         if (!valid) return;
         try {
             await submit();
 
-            Alert.alert(
-                "Success",
+            Alert.alert("Success",
                 "Survey submitted successfully.",
                 [
                     {
                         text: "OK",
-                        onPress: () =>
-                            router.replace("/"),
+                        onPress: () => router.replace("/"),
                     },
                 ]
             );
 
         } catch (error) {
-
-            Alert.alert(
-                "Error",
-                "Failed to submit survey."
+            Alert.alert("Error", "Failed to submit survey."
             );
         }
     };
@@ -194,6 +199,13 @@ const Survey = () => {
 
                 </ScrollView>
 
+                {/* Offline card */}
+                {showOfflineCard && (
+                    <OfflineCard
+                        onClose={() => setShowOfflineCard(false)}
+                        text={"Please connect to the internet before submitting this survey."}
+                    />
+                )}
             </View>
         </KeyboardAvoidingView>
     );

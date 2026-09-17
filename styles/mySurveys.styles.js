@@ -12,7 +12,51 @@ const styles = StyleSheet.create({
     },
 
     header: {
-        marginBottom: 20,
+        marginBottom: 22,
+    },
+
+    headerTop: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+
+    backButton: {
+        width: 46,
+        height: 46,
+        borderRadius: 15,
+        backgroundColor: COLOR.primary,
+
+        alignItems: "center",
+        justifyContent: "center",
+
+        marginRight: 13,
+
+        elevation: 4,
+        shadowColor: COLOR.primary,
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
+    },
+
+    headerText: {
+        flex: 1,
+    },
+
+    title: {
+        fontSize: 25,
+        fontWeight: "800",
+        color: COLOR.text,
+        letterSpacing: -0.5,
+    },
+
+    subtitle: {
+        fontSize: 13,
+        color: COLOR.textSecondary,
+        marginTop: 3,
+        lineHeight: 18,
     },
 
     back: {
@@ -21,31 +65,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
 
-    backButton: {
-        width: 42,
-        height: 42,
-        borderRadius: 12,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: COLOR.surface,
-        borderWidth: 1,
-        borderColor: COLOR.border,
-        marginRight: 12,
-    },
 
-    title: {
-        flex: 1,
-        fontSize: 28,
-        fontWeight: "700",
-        color: COLOR.text,
-    },
-
-    subtitle: {
-        fontSize: 15,
-        color: COLOR.textSecondary,
-        marginLeft: 54,
-        lineHeight: 21,
-    },
 
 
     // Survey Card

@@ -1,14 +1,13 @@
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import Loader from '../../components/Loader';
 import SurveyCard from "../../components/SurveyCard";
 import { getMySurveys } from "../../services/submissions";
 import { useAuthStore } from '../../store/authStore';
 
-import { Ionicons } from '@expo/vector-icons';
+import { Appbar } from 'react-native-paper';
 import NotFound from '../../components/NotFound';
-import COLOR from '../../constant/colors';
 import styles from '../../styles/mySurveys.styles';
 
 const MySurveys = () => {
@@ -45,13 +44,20 @@ const MySurveys = () => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <View style={styles.back}>
-                    <TouchableOpacity onPress={() => router.back()} style={styles.backButton}   >
-                        <Ionicons name="arrow-back" size={24} color={COLOR.text} />
-                    </TouchableOpacity>
-                    <Text style={styles.title}>My Surveys</Text>
+                <View style={styles.headerTop}>
+                    <Appbar.BackAction
+                        onPress={() => router.back()}
+                        style={styles.backButton}
+                        color="white"
+                    />
+
+                    <View style={styles.headerText}>
+                        <Text style={styles.title}>My Surveys</Text>
+                        <Text style={styles.subtitle}>
+                            Your completed PSER surveys
+                        </Text>
+                    </View>
                 </View>
-                <Text style={styles.subtitle}>View your completed PSER surveys</Text>
             </View>
 
 

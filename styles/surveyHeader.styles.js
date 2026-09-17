@@ -7,7 +7,29 @@ export default StyleSheet.create({
         backgroundColor: COLOR.background,
 
     },
+    // _________________Back Button___________
+    backButton: {
+        width: 46,
+        height: 46,
+        borderRadius: 15,
 
+        backgroundColor: COLOR.primary,
+
+        alignItems: "center",
+        justifyContent: "center",
+
+        marginBottom: 12,
+
+        elevation: 5,
+
+        shadowColor: COLOR.primary,
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 7,
+    },
     infoCard: {
         flexDirection: "row",
         alignItems: "center",

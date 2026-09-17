@@ -1,20 +1,26 @@
 import { Stack, useRouter, useSegments } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
-
-import Loader from "../../components/Loader";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import OfflineBanner from "../../components/Netinfo/OfflineBanner";
 import SafeAreaWrapper from "../../components/SafeAreaWrapper";
 import { supabase } from "../../lib/supabase";
-import { useAuthStore } from "../../store/authStore";
-
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   getCurrentSession,
   getEmployeeProfile,
 } from "../../services/auth";
+import { useAuthStore } from "../../store/authStore";
 
+import { StatusBar } from "react-native";
 import { PaperProvider } from "react-native-paper";
 
+import { useNetworkStatus } from "../../hooks/useNetworkStatus";
+
+SplashScreen.preventAutoHideAsync();
+
+
 export default function RootLayout() {
+  const { isOnline } = useNetworkStatus();
   const [loading, setLoading] = useState(true);
 
   const user = useAuthStore((state) => state.user);
@@ -23,14 +29,20 @@ export default function RootLayout() {
   const router = useRouter();
   const segments = useSegments();
 
+
+
+
+  useEffect(() => {
+    if (!loading) {
+      SplashScreen.hideAsync();
+    }
+  }, [loading]);
+
   useEffect(() => {
     checkAuth();
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const { data: { subscription }, } = supabase.auth.onAuthStateChange(async (event, session) => {
 
-      console.log("AUTH EVENT:", event);
 
       // Logout
       if (!session?.user) {
@@ -115,13 +127,13 @@ export default function RootLayout() {
     }
   };
 
-  if (loading) {
-    return <Loader />;
-  }
 
   return (
     <PaperProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
+        <StatusBar style="light" backgroundColor="#0B6B4F" />
+
+        {!isOnline && <OfflineBanner />}
         <SafeAreaWrapper>
           <Stack screenOptions={{ headerShown: false }} />
         </SafeAreaWrapper>

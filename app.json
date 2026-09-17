@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "pser-d2d-mobile",
+    "name": "PSER D2D",
     "slug": "pser-d2d-mobile",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "pserd2dmobile",
@@ -17,7 +17,8 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.devamna.pserd2dmobile"
     },
     "web": {
       "output": "static",
@@ -30,7 +31,7 @@
         {
           "backgroundColor": "#0B6B4F",
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 76
+          "imageWidth": 110
         }
       ],
       "expo-image",
@@ -39,6 +40,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "c550a608-e065-4ddb-bdb3-352c421b07a2"
+      }
     }
   }
 }

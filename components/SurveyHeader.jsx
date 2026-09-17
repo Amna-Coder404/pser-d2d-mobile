@@ -1,8 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
 
+import { useRouter } from "expo-router";
+import { Appbar } from 'react-native-paper';
 import COLOR from "../constant/colors";
 import styles from "../styles/surveyHeader.styles";
+
+
 
 const steps = [
     {
@@ -20,9 +24,17 @@ const steps = [
 ];
 
 const SurveyHeader = ({ currentStep }) => {
+    const router = useRouter()
     return (
         <View style={styles.container}>
 
+            <Appbar.BackAction
+
+                onPress={() => router.back()}
+                style={styles.backButton}
+                iconColor="#FFFFFF"
+
+            />
             {/* PSER Info */}
             <View style={styles.infoCard}>
 
