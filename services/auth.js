@@ -62,9 +62,7 @@ export const getEmployeeProfile = async (userId) => {
 
 export const logoutEmployee = async () => {
     try {
-        await supabase.auth.signOut({
-            scope: "local",
-        });
+        await supabase.auth.signOut({ scope: "local", });
     } catch (error) {
         console.log("LOGOUT ERROR:", error);
     }

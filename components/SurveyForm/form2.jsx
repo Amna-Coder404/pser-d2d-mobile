@@ -11,7 +11,11 @@ import {
 import { Button, Dialog, Portal } from "react-native-paper";
 import COLOR from "../../constant/colors";
 import styles from "../../styles/survey.styles";
-
+import {
+    cleanCNIC,
+    formatCNIC,
+    isValidCNIC,
+} from "../../utils/cnic";
 
 const educationOptions = [
     { label: "No Education", value: "no_education" },
@@ -57,7 +61,7 @@ const Form2 = forwardRef(({ data, updateField, pickImage }, ref) => {
         // CNIC
         if (!data.cnic.trim()) {
             newErrors.cnic = "CNIC number is required";
-        } else if (!/^\d{13}$/.test(data.cnic.trim())) {
+        } else if (!isValidCNIC(data.cnic)) {
             newErrors.cnic = "CNIC must be exactly 13 digits";
         }
         // Person Image
@@ -124,12 +128,13 @@ const Form2 = forwardRef(({ data, updateField, pickImage }, ref) => {
                 style={styles.input}
                 placeholder="Enter CNIC number"
                 placeholderTextColor={COLOR.textSecondary}
-                keyboardType="phone-pad"
-                maxLength={13}
-                value={data.cnic}
-                onChangeText={(value) => handleChange("cnic", value)}
+                keyboardType="numeric"
+                maxLength={15}
+                value={formatCNIC(data.cnic)}
+                onChangeText={(value) =>
+                    handleChange("cnic", cleanCNIC(value))
+                }
             />
-
             {errors.cnic ? (
                 <Text style={styles.errors}>
                     {errors.cnic}

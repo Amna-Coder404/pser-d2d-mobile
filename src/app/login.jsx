@@ -21,7 +21,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useAuthStore } from "../../store/authStore";
 import styles from '../../styles/login.styles';
-
+import { cleanCNIC, formatCNIC } from "../../utils/cnic";
 
 
 const Login = () => {
@@ -140,11 +140,12 @@ const Login = () => {
                             style={styles.input}
                             placeholder="CNIC"
                             placeholderTextColor="#94A3B8"
-                            value={cnic}
-                            onChangeText={setCnic}
+                            value={formatCNIC(cnic)}
+                            onChangeText={(value) => setCnic(cleanCNIC(value))}
                             keyboardType="numeric"
                             editable={!loading}
                             returnKeyType="next"
+                            maxLength={15}
                         />
                         <View style={styles.passwordContainer}>
                             <TextInput

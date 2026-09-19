@@ -10,6 +10,7 @@ import {
 import { Card, IconButton } from "react-native-paper";
 
 import styles from "../styles/mySurveys.styles";
+import { formatCNIC } from "../utils/cnic";
 
 const SurveyCard = ({ item }) => {
     const [expanded, setExpanded] = useState(false);
@@ -139,7 +140,8 @@ const SurveyCard = ({ item }) => {
                         <View style={styles.infoRow}>
                             <Text style={styles.label}>CNIC No.</Text>
                             <Text style={styles.value}>
-                                {item.cnic || "Not provided"}
+
+                                {formatCNIC(item.cnic) || "Not provided"}
                             </Text>
                         </View>
 
