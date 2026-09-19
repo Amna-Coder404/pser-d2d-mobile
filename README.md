@@ -2,6 +2,12 @@
 
 A mobile application built for **Pakistan Social & Economic Registry (PSER)** door-to-door surveys. The app allows field employees to collect household information, save incomplete surveys as drafts, continue working offline, and synchronize data with Supabase when an internet connection is available.
 
+## 📱 Android APK
+
+Download the latest Android APK:
+
+[![Download APK](https://img.shields.io/badge/Download-Android%20APK-brightgreen?style=for-the-badge&logo=android)](https://expo.dev/accounts/devamna/projects/pser-d2d-mobile/builds/14cb51db-d349-4b91-80ae-5924144856a3)
+
 ## Features
 
 * 🔐 Employee authentication
