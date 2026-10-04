@@ -6,8 +6,7 @@ A mobile application built for **Pakistan Social & Economic Registry (PSER)** do
 
 Download the latest Android APK:
 
-[![Download APK](https://img.shields.io/badge/Download-Android%20APK-brightgreen?style=for-the-badge&logo=android)](https://expo.dev/accounts/devamna/projects/pser-d2d-mobile/builds/14cb51db-d349-4b91-80ae-5924144856a3)
-
+[![Download APK](https://img.shields.io/badge/Download-Android%20APK-brightgreen?style=for-the-badge&logo=android)](https://expo.dev/accounts/devamna/projects/pser-d2d-mobile/builds/bad909e8-08c4-4a54-b539-58629faa3dac)
 ## Features
 
 * 🔐 Employee authentication
