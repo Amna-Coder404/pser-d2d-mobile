@@ -8,11 +8,11 @@
     "scheme": "pserd2dmobile",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/images/icon.png"
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#F4F8F6",
+        "backgroundColor": "#0A634D",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
@@ -29,9 +29,9 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#0B6B4F",
+          "backgroundColor": "#FFFFFF",
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 110
+          "imageWidth": 200
         }
       ],
       "expo-image",
@@ -44,8 +44,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "c550a608-e065-4ddb-bdb3-352c421b07a2"
+        "projectId": "948ab5a8-82b5-4d69-8b4c-5eb117513304"
       }
-    }
+    },
+    "owner": "devamna"
   }
 }

@@ -4,11 +4,7 @@ import {
 
 function SafeAreaWrapper({ children }) {
     return (
-        <SafeAreaView
-            style={{
-                flex: 1, backgroundColor: "#fff",
-            }}
-        >
+        <SafeAreaView style={{ flex: 1 }}   >
             {children}
         </SafeAreaView>
     );
